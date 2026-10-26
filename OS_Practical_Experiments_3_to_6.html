@@ -1,0 +1,85 @@
+<!doctype html>
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><meta content="Simple Operating Systems practical programs with aim, code, output and result." name="description"/><title>OSPrac | Experiments 3–6</title>
+<style>
+:root{--bg:#f4f6fb;--panel:#fff;--ink:#172033;--muted:#657087;--accent:#5145cd;--line:#e3e7f0;--code:#101827}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}.hero{background:linear-gradient(135deg,#171b35,#4338a8);color:white;padding:38px 20px 30px}.wrap{max-width:1000px;margin:auto}.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.76rem;font-weight:800;color:#c8c6ff}.hero h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;margin:8px 0}.hero p{color:#e0e2ff;max-width:680px;margin:12px 0 0}.tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.tools input{flex:1;min-width:220px;border:0;border-radius:12px;padding:13px 15px;font:inherit}.count{align-self:center;color:#e0e2ff;font-size:.9rem}.content{padding:24px 16px 50px}.notice{background:#fff8dd;border:1px solid #f0dfa1;color:#604c0b;border-radius:12px;padding:13px 15px;margin-bottom:20px;font-size:.92rem}.experiment{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;margin:0 0 18px;box-shadow:0 4px 16px #1e29400a;overflow:hidden}.card-head{display:flex;gap:14px;align-items:flex-start}.number{background:#eeedff;color:var(--accent);font-weight:850;border-radius:12px;min-width:46px;height:46px;display:grid;place-items:center}.experiment h2{font-size:1.15rem;margin:1px 0 6px}.aim{margin:0;color:var(--muted)}.code-head{display:flex;justify-content:space-between;align-items:center;margin-top:18px;margin-bottom:8px;font-weight:750;font-size:.9rem}.copy{border:1px solid #d7d8fa;background:#f2f1ff;color:#3428a3;border-radius:8px;padding:7px 11px;cursor:pointer;font:inherit;font-size:.82rem}.copy:hover{background:#e6e4ff}pre{margin:0;background:var(--code);color:#e9eef9;padding:16px;border-radius:12px;overflow:auto;font:13px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:4}code{white-space:pre}.output,.result{margin:13px 0 0;font-size:.93rem}.output{color:#46536a}.result{color:#1e6a4b;background:#edfaf3;border-radius:9px;padding:10px 12px}.footer{text-align:center;color:var(--muted);padding:8px 16px 30px;font-size:.88rem}.empty{display:none;text-align:center;color:var(--muted);padding:25px}@media(max-width:600px){.hero{padding-top:28px}.experiment{padding:15px}.card-head{gap:10px}.number{min-width:38px;height:38px}pre{padding:12px;font-size:12px}}
+</style></head><body><header class="hero"><div class="wrap"><div class="eyebrow">Student practical guide</div><h1>OSPrac</h1><p>Operating Systems practical programs — simple code, aim, expected output, and result in one place.</p><div class="tools"><input aria-label="Search experiments" id="search" placeholder="Search these 4 experiments (Threads, FCFS, Priority, Round Robin)…" type="search"/><span class="count" id="count">4 experiments</span></div></div></header><main class="content wrap"><div class="notice"><b>Note: </b>Focus set: Experiments 3, 4, 5, and 6 only. Threads requires Linux/Unix and pthread support. Follow your college record if its exact algorithm or input format differs.</div><article class="experiment" data-num="3" data-title="threads">
+<div class="card-head"><span class="number">03</span><div><h2>Experiment 3: Threads</h2><p class="aim"><b>Aim:</b> To create and execute a thread.</p></div></div>
+<div class="code-head"><span>Program</span><button class="copy" type="button">Copy code</button></div>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;pthread.h&gt;
+
+void *show(void *arg) {
+    printf("Thread is running\n");
+    return NULL;
+}
+
+int main(void) {
+    pthread_t t;
+    pthread_create(&amp;t, NULL, show, NULL);
+    pthread_join(t, NULL);
+    printf("Main program ends\n");
+    return 0;
+}</code></pre>
+<p class="output"><b>Expected output / note:</b> Thread is running
+Main program ends. Compile on Linux using: gcc file.c -pthread</p>
+<p class="result"><b>Result:</b> Thus, the experiment was studied and executed / simulated successfully.</p>
+</article><article class="experiment" data-num="4" data-title="fcfs cpu scheduling">
+<div class="card-head"><span class="number">04</span><div><h2>Experiment 4: FCFS CPU Scheduling</h2><p class="aim"><b>Aim:</b> To calculate waiting time and turnaround time using FCFS.</p></div></div>
+<div class="code-head"><span>Program</span><button class="copy" type="button">Copy code</button></div>
+<pre><code>#include &lt;stdio.h&gt;
+int main(void) {
+    int n, i, bt[20], wt[20], tat[20];
+    printf("Enter number of processes: "); scanf("%d", &amp;n);
+    for (i = 0; i &lt; n; i++) { printf("Burst time P%d: ", i+1); scanf("%d", &amp;bt[i]); }
+    wt[0] = 0;
+    for (i = 1; i &lt; n; i++) wt[i] = wt[i-1] + bt[i-1];
+    printf("Process\tBT\tWT\tTAT\n");
+    for (i = 0; i &lt; n; i++) { tat[i] = wt[i] + bt[i]; printf("P%d\t%d\t%d\t%d\n", i+1, bt[i], wt[i], tat[i]); }
+    return 0;
+}</code></pre>
+<p class="output"><b>Expected output / note:</b> The waiting time and turnaround time of each process are displayed.</p>
+<p class="result"><b>Result:</b> Thus, the experiment was studied and executed / simulated successfully.</p>
+</article><article class="experiment" data-num="5" data-title="priority scheduling (non-preemptive)">
+<div class="card-head"><span class="number">05</span><div><h2>Experiment 5: Priority Scheduling (Non-preemptive)</h2><p class="aim"><b>Aim:</b> To schedule processes based on priority (smaller number means higher priority).</p></div></div>
+<div class="code-head"><span>Program</span><button class="copy" type="button">Copy code</button></div>
+<pre><code>#include &lt;stdio.h&gt;
+int main(void) {
+    int n, i, j, bt[20], p[20], id[20], wt[20], tat[20], t;
+    printf("Enter number of processes: "); scanf("%d", &amp;n);
+    for (i=0;i&lt;n;i++) { id[i]=i+1; printf("Burst time and priority for P%d: ",i+1); scanf("%d%d",&amp;bt[i],&amp;p[i]); }
+    for (i=0;i&lt;n-1;i++) for (j=i+1;j&lt;n;j++) if (p[i]&gt;p[j]) {
+        t=p[i];p[i]=p[j];p[j]=t; t=bt[i];bt[i]=bt[j];bt[j]=t; t=id[i];id[i]=id[j];id[j]=t;
+    }
+    wt[0]=0; for(i=1;i&lt;n;i++) wt[i]=wt[i-1]+bt[i-1];
+    printf("Process\tBT\tPriority\tWT\tTAT\n");
+    for(i=0;i&lt;n;i++){tat[i]=wt[i]+bt[i];printf("P%d\t%d\t%d\t\t%d\t%d\n",id[i],bt[i],p[i],wt[i],tat[i]);}
+    return 0;
+}</code></pre>
+<p class="output"><b>Expected output / note:</b> Processes are displayed in priority order with waiting and turnaround times.</p>
+<p class="result"><b>Result:</b> Thus, the experiment was studied and executed / simulated successfully.</p>
+</article><article class="experiment" data-num="6" data-title="round robin scheduling">
+<div class="card-head"><span class="number">06</span><div><h2>Experiment 6: Round Robin Scheduling</h2><p class="aim"><b>Aim:</b> To perform Round Robin CPU scheduling using a time quantum.</p></div></div>
+<div class="code-head"><span>Program</span><button class="copy" type="button">Copy code</button></div>
+<pre><code>#include &lt;stdio.h&gt;
+int main(void) {
+    int n, i, q, bt[20], rem[20], time=0, done;
+    printf("Enter number of processes: "); scanf("%d", &amp;n);
+    for(i=0;i&lt;n;i++){printf("Burst time P%d: ",i+1);scanf("%d",&amp;bt[i]);rem[i]=bt[i];}
+    printf("Enter time quantum: "); scanf("%d",&amp;q);
+    do {
+        done=1;
+        for(i=0;i&lt;n;i++) if(rem[i]&gt;0){done=0;if(rem[i]&gt;q){time+=q;rem[i]-=q;}else{time+=rem[i];rem[i]=0;printf("P%d completed at time %d\n",i+1,time);}}
+    } while(!done);
+    return 0;
+}</code></pre>
+<p class="output"><b>Expected output / note:</b> Each process receives CPU time in turns and its completion time is displayed.</p>
+<p class="result"><b>Result:</b> Thus, the experiment was studied and executed / simulated successfully.</p>
+</article><p class="empty" id="empty">No matching experiment found. Try Threads, FCFS, Priority, or Round Robin.</p></main><footer class="footer">OSPrac · Operating Systems Practical Notes</footer>
+<script>
+const search=document.getElementById('search'), cards=[...document.querySelectorAll('.experiment')], count=document.getElementById('count'), empty=document.getElementById('empty');
+function filter(){const q=search.value.toLowerCase().trim();let shown=0;cards.forEach(c=>{const match=(c.dataset.title+' '+c.innerText.toLowerCase()).includes(q);c.style.display=match?'':'none';if(match)shown++;});count.textContent=shown+' of 4 experiments';empty.style.display=shown?'none':'block';}
+search.addEventListener('input',filter);
+document.querySelectorAll('.copy').forEach(btn=>btn.addEventListener('click',async()=>{const code=btn.closest('.experiment').querySelector('code').innerText;try{await navigator.clipboard.writeText(code);btn.textContent='Copied!';}catch(e){btn.textContent='Select code to copy';}setTimeout(()=>btn.textContent='Copy code',1600);}));
+</script></body></html>
